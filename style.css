@@ -1,0 +1,42 @@
+body{
+	display:flex;
+	height:100vh;
+	align-items: center;
+	justify-content:center;
+	flex-direction:column;
+	background-color: #e5e5e5;
+}
+
+.container{
+	border: 2px solid black;
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .05);
+	/*background-color: rgba(155,155,155, .1);*/
+	padding: 10px;
+}
+
+h1{
+	font-size:4rem;
+}
+
+h2{
+	display:inline;
+	font-size:3rem;
+}
+
+input, select{
+	width: 150px;
+	height: 30px;
+	margin: 3px 10px 10px 10px;
+}
+
+
+/*Hide Input Number Arrows chrome, edge, etc.*/
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/*Hide Input Number Arrows mozilla*/
+input[type=number] {
+  -moz-appearance: textfield;
+}
