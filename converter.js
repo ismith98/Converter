@@ -32,10 +32,22 @@ run();
 async function run() {
 	await getRates();
 	getHtmlElements();
-	for(let country in rates) {
-		//Set the select element with the list of currencies
-		setCurrencyNames(country);
+	
+	// Connect the 3 lettered currency representation to its full name
+	// Put the names into a list to an array so it can be sorted before
+	// adding it to the drop down menu
+	let currencyNamesList = [];
+	for(let currency in rates) {
+		currencyNamesList = setCurrencyNames(currency, currencyNamesList);
 	}
+	
+	// Sort the list and add it to the drop down menu
+	currencyNamesList.sort();
+	for(let i = 0; i < currencyNamesList.length; i++) {
+		addCurrencyToDropDownMenu(currencyNamesList[i]);
+	}
+	
+	
 	// What the app displays when the page loads
 	init();
 	
@@ -171,167 +183,274 @@ function initListeners() {
 	});
 }
 
-//Set the select element with the list of currencies given from the API
-function setCurrencyNames(country) {
-	switch(country) {
+// Connect the 3 lettered currency representation to its full name
+function setCurrencyNames(currency, currencyNamesList) {
+	switch(currency) {
 			case 'CAD': 
+				currencyNames.CAD = "Canadian Dollar ";
+				currencyNamesList.push(currencyNames.CAD);
+				break;
+			case 'HKD':
+				currencyNames.HKD = "Hong Kong Dollar ";
+				currencyNamesList.push(currencyNames.HKD);
+				break;
+			case 'ISK':
+				currencyNames.ISK = "Icelandic Krona ";
+				currencyNamesList.push(currencyNames.ISK);
+				break;
+			case 'PHP':
+				currencyNames.PHP = "Philippine Peso ";
+				currencyNamesList.push(currencyNames.PHP);
+				break;
+			case 'DKK':
+				currencyNames.DKK = "Danish Krone ";
+				currencyNamesList.push(currencyNames.DKK);
+				break;
+			case 'HUF':
+				currencyNames.HUF = "Hungarian Forint ";
+				currencyNamesList.push(currencyNames.HUF);
+				break;
+			case 'CZK':
+				currencyNames.CZK = "Czech Koruna ";
+				currencyNamesList.push(currencyNames.CZK);
+				break;
+			case 'AUD':
+				currencyNames.AUD = "Australian Dollar ";
+				currencyNamesList.push(currencyNames.AUD);
+				break;
+			case 'RON':
+				currencyNames.RON = "Romanian Leu ";
+				currencyNamesList.push(currencyNames.RON);
+				break;
+			case 'SEK':
+				currencyNames.SEK = "Swedish Krona ";
+				currencyNamesList.push(currencyNames.SEK);
+				break;
+			case 'IDR':
+				currencyNames.IDR = "Indonesian Rupiah ";
+				currencyNamesList.push(currencyNames.IDR);
+				break;
+			case 'INR':
+				currencyNames.INR = "Indian Rupee ";
+				currencyNamesList.push(currencyNames.INR);
+				break;
+			case 'BRL':
+				currencyNames.BRL = "Brazilian Real ";
+				currencyNamesList.push(currencyNames.BRL);
+				break;
+			case 'RUB':
+				currencyNames.RUB = "Russian Rouble ";
+				currencyNamesList.push(currencyNames.RUB);
+				break;
+			case 'HRK':
+				currencyNames.HRK = "Croatian Kuna ";
+				currencyNamesList.push(currencyNames.HRK);
+				break;
+			case 'JPY':
+				currencyNames.JPY = "Japanese Yen ";
+				currencyNamesList.push(currencyNames.JPY);
+				break;
+			case 'THB':
+				currencyNames.THB = "Thai Baht ";
+				currencyNamesList.push(currencyNames.THB);
+				break;
+			case 'CHF':
+				currencyNames.CHF = "Swiss Franc ";
+				currencyNamesList.push(currencyNames.CHF);
+				break;
+			case 'SGD':
+				currencyNames.SGD = "Singapore Dollar ";
+				currencyNamesList.push(currencyNames.SGD);
+				break;
+			case 'PLN':
+				currencyNames.PLN = "Polish Zloty ";
+				currencyNamesList.push(currencyNames.PLN);
+				break;
+			case 'BGN':
+				currencyNames.BGN = "Bulgarian Lev ";
+				currencyNamesList.push(currencyNames.BGN);
+				break;
+			case 'TRY':
+				currencyNames.TRY = "Turkish Lira ";
+				currencyNamesList.push(currencyNames.TRY);
+				break;
+			case 'CNY':
+				currencyNames.CNY = "Chinese Yuan Renminbi ";
+				currencyNamesList.push(currencyNames.CNY);
+				break;
+			case 'NOK':
+				currencyNames.NOK = "Norwegian Krone ";
+				currencyNamesList.push(currencyNames.NOK);
+				break;
+			case 'NZD':
+				currencyNames.NZD = "New Zealand Dollar "
+				currencyNamesList.push(currencyNames.NZD);
+				break;
+			case 'ZAR':
+				currencyNames.ZAR = "South African Rand ";
+				currencyNamesList.push(currencyNames.ZAR);
+				break;
+			case 'USD':
+				currencyNames.USD = "United States Dollar ";
+				currencyNamesList.push(currencyNames.USD);
+				break;
+			case 'MXN':
+				currencyNames.MXN = "Mexican Peso ";
+				currencyNamesList.push(currencyNames.MXN);
+				break;
+			case 'ILS':
+				currencyNames.ILS = "Israeli Shekel ";
+				currencyNamesList.push(currencyNames.ILS);
+				break;
+			case 'GBP':
+				currencyNames.GBP = "Pound Sterling ";
+				currencyNamesList.push(currencyNames.GBP);
+				break;
+			case 'KRW':
+				currencyNames.KRW = "South Korean Won ";
+				currencyNamesList.push(currencyNames.KRW);
+				break;
+			case 'MYR':
+				currencyNames.MYR = "Malaysian Ringgit ";
+				currencyNamesList.push(currencyNames.MYR);
+				break;
+			default: 
+		
+		}
+
+	return currencyNamesList;
+
+}
+
+function addCurrencyToDropDownMenu(currency) {
+	switch(currency) {
+			case currencyNames.CAD: 
 				currencyNames.CAD = "Canadian Dollar ";
 				topDropDownMenu.innerHTML += `<option value='CAD'>${currencyNames.CAD}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='CAD'>${currencyNames.CAD}</option>`;
 				break;
-			case 'HKD':
-				currencyNames.HKD = "Hong Kong Dollar ";
+			case currencyNames.HKD:
 				topDropDownMenu.innerHTML += `<option value='HKD'>${currencyNames.HKD}</option>`;
 				//Give this element the selected attribute
 				bottomDropDownMenu.innerHTML += `<option value='HKD' selected>${currencyNames.HKD}</option>`;
 				break;
-			case 'ISK':
-				currencyNames.ISK = "Icelandic Krona ";
+			case currencyNames.ISK:
 				topDropDownMenu.innerHTML += `<option value='ISK'>${currencyNames.ISK}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='ISK'>${currencyNames.ISK}</option>`;
 				break;
-			case 'PHP':
-				currencyNames.PHP = "Philippine Peso ";
+			case currencyNames.PHP:
 				topDropDownMenu.innerHTML += `<option value='PHP'>${currencyNames.PHP}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='PHP'>${currencyNames.PHP}</option>`;
 				break;
-			case 'DKK':
-				currencyNames.DKK = "Danish Krone ";
+			case currencyNames.DKK:
 				topDropDownMenu.innerHTML += `<option value='DKK'>${currencyNames.DKK}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='DKK'>${currencyNames.DKK}</option>`;
 				break;
-			case 'HUF':
-				currencyNames.HUF = "Hungarian Forint ";
+			case currencyNames.HUF:
 				topDropDownMenu.innerHTML += `<option value='HUF'>${currencyNames.HUF}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='HUF'>${currencyNames.HUF}</option>`;
 				break;
-			case 'CZK':
-				currencyNames.CZK = "Czech Koruna ";
+			case currencyNames.CZK:
 				topDropDownMenu.innerHTML += `<option value='CZK'>${currencyNames.CZK}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='CZK'>${currencyNames.CZK}</option>`;
 				break;
-			case 'AUD':
-				currencyNames.AUD = "Australian Dollar ";
+			case currencyNames.AUD:
 				topDropDownMenu.innerHTML += `<option value='AUD'>${currencyNames.AUD}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='AUD'>${currencyNames.AUD}</option>`;
 				break;
-			case 'RON':
-				currencyNames.RON = "Romanian Leu ";
+			case currencyNames.RON:
 				topDropDownMenu.innerHTML += `<option value='RON'>${currencyNames.RON}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='RON'>${currencyNames.RON}</option>`;
 				break;
-			case 'SEK':
-				currencyNames.SEK = "Swedish Krona ";
+			case currencyNames.SEK:
 				topDropDownMenu.innerHTML += `<option value='SEK'>${currencyNames.SEK}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='SEK'>${currencyNames.SEK}</option>`;
 				break;
-			case 'IDR':
-				currencyNames.IDR = "Indonesian Rupiah ";
+			case currencyNames.IDR:
 				topDropDownMenu.innerHTML += `<option value='IDR'>${currencyNames.IDR}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='IDR'>${currencyNames.IDR}</option>`;
 				break;
-			case 'INR':
-				currencyNames.INR = "Indian Rupee ";
+			case currencyNames.INR:
 				topDropDownMenu.innerHTML += `<option value='INR'>${currencyNames.INR}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='INR'>${currencyNames.INR}</option>`;
 				break;
-			case 'BRL':
-				currencyNames.BRL = "Brazilian Real "
+			case currencyNames.BRL:
 				topDropDownMenu.innerHTML += `<option value='BRL'>${currencyNames.BRL}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='BRL'>${currencyNames.BRL}</option>`;
 				break;
-			case 'RUB':
-				currencyNames.RUB = "Russian Rouble "
+			case currencyNames.RUB:
 				topDropDownMenu.innerHTML += `<option value='RUB'>${currencyNames.RUB}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='RUB'>${currencyNames.RUB}</option>`;
 				break;
-			case 'HRK':
-				currencyNames.HRK = "Croatian Kuna "
+			case currencyNames.HRK:
 				topDropDownMenu.innerHTML += `<option value='HRK'>${currencyNames.HRK}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='HRK'>${currencyNames.HRK}</option>`;
 				break;
-			case 'JPY':
-				currencyNames.JPY = "Japanese Yen "
+			case currencyNames.JPY:
 				topDropDownMenu.innerHTML += `<option value='JPY'>${currencyNames.JPY}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='JPY'>${currencyNames.JPY}</option>`;
 				break;
-			case 'THB':
-				currencyNames.THB = "Thai Baht "
+			case currencyNames.THB:
 				topDropDownMenu.innerHTML += `<option value='THB'>${currencyNames.THB}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='THB'>${currencyNames.THB}</option>`;
 				break;
-			case 'CHF':
-				currencyNames.CHF = "Swiss Franc "
+			case currencyNames.CHF:
 				topDropDownMenu.innerHTML += `<option value='CHF'>${currencyNames.CHF}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='CHF'>${currencyNames.CHF}</option>`;
 				break;
-			case 'SGD':
-				currencyNames.SGD = "Singapore Dollar "
+			case currencyNames.SGD:
 				topDropDownMenu.innerHTML += `<option value='SGD'>${currencyNames.SGD}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='SGD'>${currencyNames.SGD}</option>`;
 				break;
-			case 'PLN':
-				currencyNames.PLN = "Polish Zloty "
+			case currencyNames.PLN:
 				topDropDownMenu.innerHTML += `<option value='PLN'>${currencyNames.PLN}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='PLN'>${currencyNames.PLN}</option>`;
 				break;
-			case 'BGN':
-				currencyNames.BGN = "Bulgarian Lev "
+			case currencyNames.BGN:
 				topDropDownMenu.innerHTML += `<option value='BGN'>${currencyNames.BGN}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='BGN'>${currencyNames.BGN}</option>`;
 				break;
-			case 'TRY':
-				currencyNames.TRY = "Turkish Lira "
+			case currencyNames.TRY:
 				topDropDownMenu.innerHTML += `<option value='TRY'>${currencyNames.TRY}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='TRY'>${currencyNames.TRY}</option>`;
 				break;
-			case 'CNY':
-				currencyNames.CNY = "Chinese Yuan Renminbi "
+			case currencyNames.CNY:
 				topDropDownMenu.innerHTML += `<option value='CNY'>${currencyNames.CNY}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='CNY'>${currencyNames.CNY}</option>`;
 				break;
-			case 'NOK':
-				currencyNames.NOK = "Norwegian Krone "
+			case currencyNames.NOK:
 				topDropDownMenu.innerHTML += `<option value='NOK'>${currencyNames.NOK}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='NOK'>${currencyNames.NOK}</option>`;
 				break;
-			case 'NZD':
-				currencyNames.NZD = "New Zealand Dollar "
+			case currencyNames.NZD:
 				topDropDownMenu.innerHTML += `<option value='NZD'>${currencyNames.NZD}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='NZD'>${currencyNames.NZD}</option>`;
 				break;
-			case 'ZAR':
-				currencyNames.ZAR = "South African Rand "
+			case currencyNames.ZAR:
 				topDropDownMenu.innerHTML += `<option value='ZAR'>${currencyNames.ZAR}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='ZAR'>${currencyNames.ZAR}</option>`;
 				break;
-			case 'USD':
-				currencyNames.USD = "United States Dollar "
+			case currencyNames.USD:
 				topDropDownMenu.innerHTML += `<option value='USD'>${currencyNames.USD}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='USD'>${currencyNames.USD}</option>`;
 				break;
-			case 'MXN':
-				currencyNames.MXN = "Mexican Peso "
+			case currencyNames.MXN:
 				topDropDownMenu.innerHTML += `<option value='MXN'>${currencyNames.MXN}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='MXN'>${currencyNames.MXN}</option>`;
 				break;
-			case 'ILS':
-				currencyNames.ILS = "Israeli Shekel "
+			case currencyNames.ILS:
 				topDropDownMenu.innerHTML += `<option value='ILS'>${currencyNames.ILS}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='ILS'>${currencyNames.ILS}</option>`;
 				break;
-			case 'GBP':
-				currencyNames.GBP = "Pound Sterling "
+			case currencyNames.GBP:
 				topDropDownMenu.innerHTML += `<option value='GBP'>${currencyNames.GBP}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='GBP'>${currencyNames.GBP}</option>`;
 				break;
-			case 'KRW':
-				currencyNames.KRW = "South Korean Won "
+			case currencyNames.KRW:
 				topDropDownMenu.innerHTML += `<option value='KRW'>${currencyNames.KRW}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='KRW'>${currencyNames.KRW}</option>`;
 				break;
-			case 'MYR':
-				currencyNames.MYR = "Malaysian Ringgit "
+			case currencyNames.MYR:
 				topDropDownMenu.innerHTML += `<option value='MYR'>${currencyNames.MYR}</option>`;
 				bottomDropDownMenu.innerHTML += `<option value='MYR'>${currencyNames.MYR}</option>`;
 				break;
@@ -339,5 +458,3 @@ function setCurrencyNames(country) {
 		
 		}
 }
-
-
